@@ -49,15 +49,20 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^7.3.4",
     "@loopback/boot": "^3.4.2",
     "@loopback/core": "^2.16.2",
     "@loopback/repository": "^3.7.1",
     "@loopback/rest": "^10.0.0",
     "@loopback/rest-explorer": "^3.3.2",
+    "@loopback/security": "^0.5.4",
     "@loopback/service-proxy": "^3.2.2",
     "@types/multer": "^1.4.7",
+    "@types/node-fetch": "^3.0.3",
     "loopback-connector-mysql": "^5.4.4",
     "multer": "^1.4.3",
+    "node-fetch": "^2.6.5",
+    "parse-bearer-token": "^1.0.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

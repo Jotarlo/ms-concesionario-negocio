@@ -14,3 +14,7 @@ export * from './venta-vehiculo.controller';
 export * from './venta-factura.controller';
 export * from './carga-archivos.controller';
 export * from './descargar-archivos.controller';
+export * from './marca.controller';
+export * from './vehiculo.controller';
+export * from './categoria.controller';
+export * from './proveedor.controller';
