@@ -2,9 +2,9 @@
 
 
 import {inject} from '@loopback/core';
+import {repository} from '@loopback/repository';
 import {
-  HttpErrors,
-  post,
+  HttpErrors, param, post,
   Request,
   requestBody,
   Response,
@@ -13,9 +13,13 @@ import {
 import multer from 'multer';
 import path from 'path';
 import {Keys as llaves} from '../config/keys';
+import {FotoVehiculo} from '../models';
+import {FotoVehiculoRepository} from '../repositories';
 
 export class CargaArchivosController {
   constructor(
+    @repository(FotoVehiculoRepository)
+    private fotoRepository: FotoVehiculoRepository
   ) { }
 
 
@@ -25,7 +29,7 @@ export class CargaArchivosController {
    * @param response
    * @param request
    */
-  @post('/CargarImagenVehiculo', {
+  @post('/CargarImagenVehiculo/{id_vehiculo}', {
     responses: {
       200: {
         content: {
@@ -42,12 +46,17 @@ export class CargaArchivosController {
   async cargarImagenDelVehiculo(
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @requestBody.file() request: Request,
+    @param.path.number("id_vehiculo") id: number
   ): Promise<object | false> {
     const rutaImagenVehiculo = path.join(__dirname, llaves.carpetaImagenVehiculo);
     let res = await this.StoreFileToPath(rutaImagenVehiculo, llaves.nombreCampoImagenVehiculo, request, response, llaves.extensionesPermitidasIMG);
     if (res) {
       const nombre_archivo = response.req?.file?.filename;
       if (nombre_archivo) {
+        let foto = new FotoVehiculo();
+        foto.id_vehiculo = id;
+        foto.nombre = nombre_archivo;
+        await this.fotoRepository.save(foto);
         return {filename: nombre_archivo};
       }
     }
