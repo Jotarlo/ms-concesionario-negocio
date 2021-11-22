@@ -63,6 +63,41 @@ export class CargaArchivosController {
     return res;
   }
 
+
+  /**
+   *
+   * @param response
+   * @param request
+   */
+  @post('/CargarImagenPrincipalVehiculo', {
+    responses: {
+      200: {
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+            },
+          },
+        },
+        description: 'Función de carga de la imagen principal de un vehículo.',
+      },
+    },
+  })
+  async cargarImagenPrincipalDelVehiculo(
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @requestBody.file() request: Request
+  ): Promise<object | false> {
+    const rutaImagenVehiculo = path.join(__dirname, llaves.carpetaImagenVehiculo);
+    let res = await this.StoreFileToPath(rutaImagenVehiculo, llaves.nombreCampoImagenVehiculo, request, response, llaves.extensionesPermitidasIMG);
+    if (res) {
+      const nombre_archivo = response.req?.file?.filename;
+      if (nombre_archivo) {
+        return {filename: nombre_archivo};
+      }
+    }
+    return res;
+  }
+
   /**
    *
    * @param response

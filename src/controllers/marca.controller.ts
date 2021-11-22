@@ -93,6 +93,7 @@ export class MarcaController {
     return this.marcaRepository.updateAll(marca, where);
   }
 
+  @authenticate.skip()
   @get('/marcas/{id}')
   @response(200, {
     description: 'Marca model instance',

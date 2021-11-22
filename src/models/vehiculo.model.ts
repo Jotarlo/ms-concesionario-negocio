@@ -1,8 +1,8 @@
-import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
-import {Marca} from './marca.model';
-import {Categoria} from './categoria.model';
+import {belongsTo, Entity, hasMany, model, property} from '@loopback/repository';
 import {CategoriaVehiculo} from './categoria-vehiculo.model';
+import {Categoria} from './categoria.model';
 import {FotoVehiculo} from './foto-vehiculo.model';
+import {Marca} from './marca.model';
 import {Proveedor} from './proveedor.model';
 
 @model()
@@ -55,6 +55,12 @@ export class Vehiculo extends Entity {
     default: 1,
   })
   estado?: number;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  foto_principal: string;
 
   @belongsTo(() => Marca, {name: 'marca'})
   id_marca: number;
